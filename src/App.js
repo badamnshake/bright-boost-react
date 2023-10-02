@@ -15,6 +15,8 @@ import Team from "./scenes/admin/team";
 // import FAQ from "./scenes/faq";
 // import Geography from "./scenes/geography";
 // import Calendar from "./scenes/calendar";
+import Contacts from './scenes/admin/contacts';
+import Invoices from './scenes/admin/invoices';
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -32,8 +34,8 @@ function App() {
               <Route path="/" element={<AdminDashboard />}></Route>
 
               <Route path="/team" element={<Team />}></Route>
-              {/* <Route path="/contacts" element={<Contacts />}></Route> */}
-              {/* <Route path="/invoices" element={<Invoices />}></Route> */}
+              <Route path="/contacts" element={<Contacts />}></Route>
+              <Route path="/invoices" element={<Invoices />}></Route>
               {/* <Route path="/form" element={<Form />}></Route> */}
               {/* <Route path="/bar" element={<Bar />}></Route> */}
               {/* <Route path="/pie" element={<Pie />}></Route> */}
