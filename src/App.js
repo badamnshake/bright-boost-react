@@ -11,6 +11,9 @@ import Invoices from './scenes/admin/invoices';
 import Form from './scenes/admin/form';
 import Calendar from './scenes/student/calendar';
 import FAQ from './scenes/student/faq';
+import BarChartPage from "./scenes/admin/BarChartPage";
+import PieChartPage from "./scenes/admin/PieChartPage";
+import LineChartPage from "./scenes/admin/LineChartPage";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -31,11 +34,10 @@ function App() {
               <Route path="/contacts" element={<Contacts />}></Route>
               <Route path="/invoices" element={<Invoices />}></Route>
               <Route path="/form" element={<Form />}></Route>
-              {/* <Route path="/bar" element={<Bar />}></Route> */}
-              {/* <Route path="/pie" element={<Pie />}></Route> */}
-              {/* <Route path="/line" element={<Line />}></Route> */}
+              <Route path="/bar" element={<BarChartPage />}></Route>
+              <Route path="/pie" element={<PieChartPage />}></Route>
+              <Route path="/line" element={<LineChartPage />}></Route>
               <Route path="/faq" element={<FAQ />}></Route>
-              {/* <Route path="/geography" element={<Geography />}></Route> */}
               <Route path="/calendar" element={<Calendar />}></Route>
 
             </Routes>
