@@ -6,6 +6,7 @@ import Header from "../../components/Header";
 import axios from "../../api/axios";
 import { useAuth } from "../../authProvider";
 import jwtDecode from "jwt-decode"; //
+import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = "/auth/login";
 
@@ -28,11 +29,13 @@ const getRole = (value) => roleMapping[value] || null;
 
 const Login = () => {
   const { setAuth } = useAuth();
+  const navigate = useNavigate();
+
   // if we have a min width of 600px we are triggering no mobile
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = async (values) => {
-    console.log(values);
+    // console.log(values);
     try {
       const response = await axios.post(LOGIN_URL, values, {
         headers: { "Content-Type": "application/json" },
@@ -46,9 +49,10 @@ const Login = () => {
 
       const role = getRole(user.role);
 
-    //   console.log(accessToken);
-    //   console.log(role);
+      //   console.log(accessToken);
+      //   console.log(role);
       setAuth(accessToken, role);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }

@@ -1,9 +1,12 @@
-import axios from "axios";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "./api/axios";
 
 export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+
+  const navigate = useNavigate();
   const [authData, setAuthData] = useState({
     token: localStorage.getItem("token"),
     role: localStorage.getItem("role"),
@@ -26,12 +29,14 @@ const AuthProvider = ({ children }) => {
       token: null,
       role: null,
     });
+    navigate('/login');
   };
 
   useEffect(() => {
     const { token, role } = authData;
 
     if (token) {
+      console.log("bearer set");
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);

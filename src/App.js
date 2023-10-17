@@ -23,7 +23,7 @@ function App() {
   const [theme, colorMode] = useMode();
   const navigate = useNavigate();
 
-  const {token, role,   loading } = useAuth();
+  const {token,    loading } = useAuth();
 
   if (loading) {
     return <div>Loading...</div>;

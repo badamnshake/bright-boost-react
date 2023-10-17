@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -14,11 +14,28 @@ import {
 } from "@mui/material";
 import Header from "../../components/Header";
 import { tokens } from "../../theme";
+import axios from "../../api/axios";
+
+const SESSION_URL = "/items/Session?fields=*,teacher_id.first_name,subject_id.name";
+
 
 const Calendar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
+  const [data, setData] = useState([]);
+
+  const getSessionData = async (values) => {
+    const response = await axios.get(SESSION_URL);
+    setData(response?.data?.data);
+    console.log(response?.data.data);
+  };
+
+  useEffect(() => {
+    getSessionData();
+  }, []);
+
+  // console.log(response);
 
   const handleDateClick = (selected) => {
     const title = prompt("Please enter a new title for your event");
@@ -73,13 +90,12 @@ const Calendar = () => {
                   primary={event.title}
                   secondary={
                     <Typography>
-
                       {/* {FullCalendar.formatDate(event.start, {
                         year: "numeric",
                         month: "short",
                         day: "numeric",
                       })} */}
-                            {() => event.start}
+                      {() => event.start}
                     </Typography>
                   }
                 />
