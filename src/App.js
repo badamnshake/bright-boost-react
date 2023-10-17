@@ -1,22 +1,43 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import AdminDashboard from "./scenes/admin/admin-dashboard";
 
 import Team from "./scenes/admin/team";
-import Contacts from './scenes/admin/contacts';
-import Invoices from './scenes/admin/invoices';
-import Form from './scenes/admin/form';
-import Calendar from './scenes/student/calendar';
-import FAQ from './scenes/student/faq';
+import Contacts from "./scenes/admin/contacts";
+import Invoices from "./scenes/admin/invoices";
+import Form from "./scenes/admin/form";
+import Calendar from "./scenes/student/calendar";
+import FAQ from "./scenes/student/faq";
 import BarChartPage from "./scenes/admin/BarChartPage";
 import PieChartPage from "./scenes/admin/PieChartPage";
 import LineChartPage from "./scenes/admin/LineChartPage";
+import Login from "./scenes/global/Login";
+// import AuthProvider from './authProvider';
+import  { useAuth } from "./authProvider";
+// import { useContext } from 'react';
 
 function App() {
   const [theme, colorMode] = useMode();
+  const navigate = useNavigate();
+
+  const {token, role,   loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+
+  if (!token) {
+    navigate("/login");
+    // return <Login />;
+    return <Routes>
+        {/* Define your login route here */}
+         <Route path="/login" element={<Login />} />
+       </Routes>
+   }
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -40,6 +61,8 @@ function App() {
               <Route path="/faq" element={<FAQ />}></Route>
               <Route path="/calendar" element={<Calendar />}></Route>
 
+              {/* login route */}
+              <Route path="/login" element={<Login />}></Route>
             </Routes>
           </main>
         </div>

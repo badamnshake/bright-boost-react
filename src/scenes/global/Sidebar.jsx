@@ -4,6 +4,7 @@ import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
+import { useAuth } from "../../authProvider";
 
 /* ---------------------------------- icons --------------------------------- */
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
@@ -18,57 +19,87 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+// import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
     <Link to={to} style={{ textDecoration: "none" }}>
-    <MenuItem 
-      active={selected === title}
-      style={{
-        color: colors.grey[100],
-      }}
-      onClick={() => setSelected(title)}
-      icon={icon}
-    >
-      <Typography>{title}</Typography>
-      {/* <Link to={to} /> */}
-    </MenuItem>
-     </Link>
+      <MenuItem
+        active={selected === title}
+        style={{
+          color: colors.grey[100],
+        }}
+        onClick={() => setSelected(title)}
+        icon={icon}
+      >
+        <Typography>{title}</Typography>
+        {/* <Link to={to} /> */}
+      </MenuItem>
+    </Link>
   );
 };
 
 const Sidebar = () => {
   const theme = useTheme();
+
+  const { role } = useAuth();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
   return (
-      // sx={{
-      //   "& .pro-sidebar-inner": {
-      //     background: `${colors.primary[400]} !important`,
-      //   },
-      //   "& .pro-icon-wrapper": {
-      //     backgroundColor: "transparent !important",
-      //   },
-      //   "& .pro-inner-item": {
-      //     padding: "5px 35px 5px 20px !important",
-      //   },
-      //   "& .pro-inner-item:hover": {
-      //     color: "#868dfb !important",
-      //   },
-      //   "& .pro-menu-item.active": {
-      //     color: "#6870fa !important",
-      //   },
-      // }}
+    // sx={{
+    //   "& .pro-sidebar-inner": {
+    //     background: `${colors.primary[400]} !important`,
+    //   },
+    //   "& .pro-icon-wrapper": {
+    //     backgroundColor: "transparent !important",
+    //   },
+    //   "& .pro-inner-item": {
+    //     padding: "5px 35px 5px 20px !important",
+    //   },
+    //   "& .pro-inner-item:hover": {
+    //     color: "#868dfb !important",
+    //   },
+    //   "& .pro-menu-item.active": {
+    //     color: "#6870fa !important",
+    //   },
+    // }}
 
-    <Box
-    >
-      <ProSidebar collapsed={isCollapsed}>
-        <Menu iconShape="square">
+    <Box>
+      <ProSidebar
+        rootStyles={{
+          [`.ps-sidebar-container`]: {
+            backgroundColor: `${colors.primary[400]}`,
+          },
+          "&.ps-menu-icon": {
+            backgroundColor: "transparent",
+          },
+        }}
+        collapsed={isCollapsed}
+      >
+        <Menu
+          iconShape="square"
+          rootStyles={{}}
+          menuItemStyles={{
+            button: ({ active }) => {
+              return {
+                backgroundColor: active ? colors.blueAccent[700] : undefined,
+                borderRadius: active ? "8px" : undefined,
+                fontWeight: active ? "bold" : undefined,
+                "&:hover": {
+                  backgroundColor: `${colors.blueAccent[700]} !important`,
+                  borderRadius: "8px !important",
+                },
+              };
+            },
+            icon: () => ({
+              backgroundColor: "transparent",
+            }),
+          }}
+        >
           {/* LOGO AND MENU ICON */}
           <MenuItem
             onClick={() => setIsCollapsed(!isCollapsed)}
@@ -86,7 +117,7 @@ const Sidebar = () => {
                 ml="15px"
               >
                 <Typography variant="h3" color={colors.grey[100]}>
-                  ADMINIS
+                  Panel
                 </Typography>
                 <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
                   <MenuOutlinedIcon />
@@ -138,13 +169,17 @@ const Sidebar = () => {
             >
               Data
             </Typography>
-            <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+
+            {role === "teacher" && (
+              <Item
+                title="Questions Queue"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
+
             <Item
               title="Contacts Information"
               to="/contacts"
@@ -174,56 +209,58 @@ const Sidebar = () => {
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="FAQ Page"
-              to="/faq"
-              icon={<HelpOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {role === "student" && (
+              <>
+                <Item
+                  title="Calendar"
+                  to="/calendar"
+                  icon={<CalendarTodayOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Geography Chart"
-              to="/geography"
-              icon={<MapOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                <Item
+                  title="FAQ Page"
+                  to="/faq"
+                  icon={<HelpOutlineOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
+
+            {role === "admin" && (
+              <>
+                <Typography
+                  variant="h6"
+                  color={colors.grey[300]}
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Charts
+                </Typography>
+                <Item
+                  title="Bar Chart"
+                  to="/bar"
+                  icon={<BarChartOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Pie Chart"
+                  to="/pie"
+                  icon={<PieChartOutlineOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  title="Line Chart"
+                  to="/line"
+                  icon={<TimelineOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
           </Box>
         </Menu>
       </ProSidebar>
