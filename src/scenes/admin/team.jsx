@@ -46,7 +46,7 @@ const Team = () => {
     },
 
     {
-      field: "access",
+      field: "answer",
       headerName: "Access Level",
       flex: 1,
       renderCell: ({row: {access}}) => {
@@ -64,13 +64,13 @@ const Team = () => {
             }
             borderRadius="4px"
             >
-                {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
+                {/* {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
                 {access === "manager" && <SecurityOutlinedIcon />}
-                {access === "user" && <LockOpenOutlinedIcon />}
+                {access === "user" && <LockOpenOutlinedIcon />} */}
 
 
                 <Typography color={colors.grey[100]} sx={{ ml: "5px"}}>
-                    {access}
+                    Mark as Answered
                 </Typography>
 
             </Box>
