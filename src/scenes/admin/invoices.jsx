@@ -1,15 +1,36 @@
 import { Box, Typography, useTheme, Button } from "@mui/material";
+import React, { useState } from 'react';
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
+import axios from "../../api/axios";
+
 
 const Invoices = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data, setData] = useState({});
   const handleClick = () => {
+    console.log(data)
     // Add your click event handling logic here
-    alert('Added in the Queue!');
+    const postData = {
+      session_id: '2',
+      student_id: 'f4edde66-8c68-416f-bd1b-b54e37c0d1fb',
+    };
+
+    axios
+      .post('/items/Question', postData)
+      .then((response) => {
+        // Handle the response from the server
+        setData(response.data);
+        alert('Added in the Queue!');
+      })
+      .catch((error) => {
+        // Handle any errors
+        alert('An error occurred.');
+        console.error(error);
+      });
   };
   const centerStyle = {
     display: 'flex',
