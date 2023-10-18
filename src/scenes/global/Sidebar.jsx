@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sidebar as ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 // import 'react-pro-sidebar/dist/css/styles.css'
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
@@ -20,6 +20,11 @@ import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutl
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
+import axios from "../../api/axios";
+
+
+const SESSION_URL = "/users/me";
+const userSessionData = "";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -48,25 +53,18 @@ const Sidebar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-
+  const [data, setData] = useState([]);
+  const getSessionData = async (values) => {
+    const response = await axios.get(SESSION_URL);
+    setData(response?.data?.data);
+    // console.log(response?.data.data);
+  };
+  
+  useEffect(() => {
+    getSessionData();
+  }, []);
   return (
-    // sx={{
-    //   "& .pro-sidebar-inner": {
-    //     background: `${colors.primary[400]} !important`,
-    //   },
-    //   "& .pro-icon-wrapper": {
-    //     backgroundColor: "transparent !important",
-    //   },
-    //   "& .pro-inner-item": {
-    //     padding: "5px 35px 5px 20px !important",
-    //   },
-    //   "& .pro-inner-item:hover": {
-    //     color: "#868dfb !important",
-    //   },
-    //   "& .pro-menu-item.active": {
-    //     color: "#6870fa !important",
-    //   },
-    // }}
+    
 
     <Box>
       <ProSidebar
@@ -144,10 +142,11 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Ed Roh
+                  
+                  {data.first_name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  VP Fancy Admin
+                  {data.email}
                 </Typography>
               </Box>
             </Box>
