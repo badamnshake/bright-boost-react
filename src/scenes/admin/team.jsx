@@ -19,8 +19,7 @@ const Team = () => {
   const getSessionData = async (values) => {
     const response = await axios.get(Users);
     setData(response?.data?.data);
-    console.log(response?.data.data);
-    // console.log(data.student_id);
+    // console.log(response?.data.data);
   };
   
   useEffect(() => {
@@ -34,7 +33,7 @@ const Team = () => {
     // },
     {
       field: "student_id",
-      headerName: "NAME",
+      headerName: "Student Name",
       flex: 1,
       cellClassName: 'name-column-cell'
     },
