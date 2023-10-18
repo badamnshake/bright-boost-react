@@ -24,7 +24,6 @@ import axios from "../../api/axios";
 
 
 const SESSION_URL = "/users/me";
-const userSessionData = "";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();

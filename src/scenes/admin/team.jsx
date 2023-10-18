@@ -2,48 +2,61 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "./../../theme";
 import { mockDataTeam } from "./../../data/mockData";
+import { useState, useEffect } from "react";
 
 /* ------------------------------------ - ----------------------------------- */
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-
+import axios from "../../api/axios";
 import Header from "../../components/Header";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-
+  const Users = "/items/Question?field=*,student_id.first_name";
+  const [data, setData] = useState([]);
+  const getSessionData = async (values) => {
+    const response = await axios.get(Users);
+    setData(response?.data?.data);
+    console.log(response?.data.data);
+    // console.log(data.student_id);
+  };
+  
+  useEffect(() => {
+    getSessionData();
+  }, []);
+  
   const columns = [
+    // {
+    //   field: "id",
+    //   headerName: "ID",
+    // },
     {
-      field: "id",
-      headerName: "ID",
-    },
-    {
-      field: "name",
+      field: "student_id",
       headerName: "NAME",
       flex: 1,
       cellClassName: 'name-column-cell'
     },
-    {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left"
-    },
+    // {
+    //   field: "age",
+    //   headerName: "Age",
+    //   type: "number",
+    //   headerAlign: "left",
+    //   align: "left"
+    // },
 
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1
-    },
+    // {
+    //   field: "phone",
+    //   headerName: "Phone Number",
+    //   flex: 1
+    // },
 
-    {
-      field: "email",
-      headerName: "Email",
-      flex: 1
-    },
+    // {
+    //   field: "email",
+    //   headerName: "Email",
+    //   flex: 1
+    // },
 
     {
       field: "answer",
@@ -115,7 +128,7 @@ sx={{
           },
         }}
       >
-        <DataGrid rows={mockDataTeam} columns={columns}
+        <DataGrid rows={data} columns={columns}
         
         
         />
