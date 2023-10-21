@@ -15,16 +15,41 @@ const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const Users = "/items/Question?field=*,student_id.first_name";
-  const [data, setData] = useState([]);
+  const Users_info = "/users";
+  const [data1, setData1] = useState([]);
+  const [data2, setData2] = useState(null);
+  const fetchData2 = async () => {
+    try {
+      const response = await axios.get(Users_info);
+      setData2(response?.data?.data);
+      console.log(response?.data.data);
+    } catch (error) {
+      console.error('Error fetching data from API 2:', error);
+    }
+  };
+
   const getSessionData = async (values) => {
     const response = await axios.get(Users);
-    setData(response?.data?.data);
+    setData1(response?.data?.data);
     // console.log(response?.data.data);
   };
   
   useEffect(() => {
     getSessionData();
+    fetchData2();
   }, []);
+
+  function findFirstName(studentId, data2) {
+    const user = data2.find((user) => user.student_id === studentId);
+    console.log(user);
+    return user ? user.first_name : '1f'; // Return the first name or 'N/A' if not found
+  }
+  const dataGridRows = data1.map((row) => ({
+    student_id: row.student_id,
+    user_name: findFirstName(row.student_id, data2),
+    // Add other properties from data1 or data2 as needed
+  }));
+
   
   const columns = [
     // {
@@ -38,7 +63,7 @@ const Team = () => {
       cellClassName: 'name-column-cell'
     },
     // {
-    //   field: "age",
+    //   field: "first_name",
     //   headerName: "Age",
     //   type: "number",
     //   headerAlign: "left",
@@ -127,7 +152,7 @@ sx={{
           },
         }}
       >
-        <DataGrid rows={data} columns={columns}
+        <DataGrid rows={data1} columns={columns}
         
         
         />
