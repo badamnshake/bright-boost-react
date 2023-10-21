@@ -19,9 +19,8 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+import { tab } from "@testing-library/user-event/dist/tab";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-import axios from "../../api/axios";
-
 
 const SESSION_URL = "/users/me";
 
@@ -53,18 +52,19 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [data, setData] = useState([]);
-  const getSessionData = async (values) => {
-    const response = await axios.get(SESSION_URL);
-    setData(response?.data?.data);
-    // console.log(response?.data.data);
-  };
-  
-  useEffect(() => {
-    getSessionData();
-  }, []);
-  return (
-    
 
+  // const getSessionData = async (values) => {
+  //   const response = await axios.get(SESSION_URL);
+
+  //   // console.log(response?.data.data);
+  // };
+
+  useEffect(() => {
+    var userData = localStorage.getItem("user");
+    if (userData) setData(JSON.parse(userData));
+  }, [setData]);
+
+  return (
     <Box>
       <ProSidebar
         rootStyles={{
@@ -141,7 +141,6 @@ const Sidebar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  
                   {data.first_name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
@@ -160,13 +159,6 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
 
             {role === "teacher" && (
               <Item
@@ -179,34 +171,13 @@ const Sidebar = () => {
             )}
 
             <Item
-              title="Contacts Information"
+              title="Attendance"
               to="/contacts"
               icon={<ContactsOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
-            <Item
-              title="Invoices Balances"
-              to="/invoices"
-              icon={<ReceiptOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Pages
-            </Typography>
-            <Item
-              title="Profile Form"
-              to="/form"
-              icon={<PersonOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
             {role === "student" && (
               <>
                 <Item
@@ -221,6 +192,14 @@ const Sidebar = () => {
                   title="FAQ Page"
                   to="/faq"
                   icon={<HelpOutlineOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+
+                <Item
+                  title="Invoices Balances"
+                  to="/invoices"
+                  icon={<ReceiptOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
@@ -267,3 +246,18 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
+// <Typography
+//   variant="h6"
+//   color={colors.grey[300]}
+//   sx={{ m: "15px 0 5px 20px" }}
+// >
+//   Pages
+// </Typography>
+// <Item
+//   title="Profile Form"
+//   to="/form"
+//   icon={<PersonOutlinedIcon />}
+//   selected={selected}
+//   setSelected={setSelected}
+// />

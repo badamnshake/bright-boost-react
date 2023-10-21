@@ -10,6 +10,8 @@ import { useNavigate } from "react-router-dom";
 
 const LOGIN_URL = "/auth/login";
 
+const USER_DATA_URL = "/users/me";
+
 const initialValues = {
   email: "",
   password: "",
@@ -41,7 +43,6 @@ const Login = () => {
         headers: { "Content-Type": "application/json" },
         withCredentials: true,
       });
-      console.log(response?.data);
       //console.log(JSON.stringify(response));
       const accessToken = response?.data?.data?.access_token;
 
@@ -49,9 +50,13 @@ const Login = () => {
 
       const role = getRole(user.role);
 
-      //   console.log(accessToken);
-      //   console.log(role);
       setAuth(accessToken, role);
+
+      setTimeout(async () => {
+        const userData = await axios.get(USER_DATA_URL);
+        localStorage.setItem("user", JSON.stringify(userData?.data?.data));
+      }, 200);
+
       navigate("/");
     } catch (err) {
       console.log(err);

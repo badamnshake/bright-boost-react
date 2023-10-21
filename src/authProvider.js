@@ -4,8 +4,8 @@ import axios from "./api/axios";
 
 export const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
 
+const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const [authData, setAuthData] = useState({
     token: localStorage.getItem("token"),
@@ -23,23 +23,28 @@ const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
+    setLoading(true);
     localStorage.removeItem("token");
     localStorage.removeItem("role");
-    setAuthData({
-      token: null,
-      role: null,
-    });
-    navigate('/login');
+    // Set the state asynchronously after a brief delay
+    setTimeout(() => {
+      setAuthData({
+        token: null,
+        role: null,
+      });
+      setLoading(false);
+      navigate("/login");
+    }, 0);
   };
 
   useEffect(() => {
     const { token, role } = authData;
 
     if (token) {
-      console.log("bearer set");
       axios.defaults.headers.common["Authorization"] = "Bearer " + token;
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
+
       setLoading(false);
     } else {
       delete axios.defaults.headers.common["Authorization"];

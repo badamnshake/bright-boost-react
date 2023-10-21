@@ -50,7 +50,7 @@ const Topbar = () => {
         <IconButton>
           <SettingsOutlinedIcon />
         </IconButton>
-        <IconButton onClick={logout}>
+        <IconButton onClick={() => logout()}>
           <LogoutOutlinedIcon />
         </IconButton>
       </Box>
