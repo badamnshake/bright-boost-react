@@ -7,7 +7,7 @@ import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useAuth } from "../../authProvider";
-import { useSessionID } from "./../../sessionIdProvider";
+import { useSessionID } from "../../sessionIdProvider";
 
 const Topbar = () => {
   const theme = useTheme();

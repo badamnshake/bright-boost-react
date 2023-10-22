@@ -11,11 +11,11 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import Header from "../../components/Header";
+import Header from "../../components/header";
 import { tokens } from "../../theme";
 import axios from "../../api/axios";
 import { useSessionID } from "../../sessionIdProvider";
-import ConfirmationDialog from "../../components/confirmation-dialog";
+import ConfirmationDialog from "../../components/confirmationDialog";
 
 const SESSION_URL =
   "/items/Session?fields=*,teacher_id.first_name,subject_id.name";

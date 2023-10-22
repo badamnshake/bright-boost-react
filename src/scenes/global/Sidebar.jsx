@@ -11,7 +11,6 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import ContactsOutlinedIcon from "@mui/icons-material/ContactsOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
 import CalendarTodayOutlinedIcon from "@mui/icons-material/CalendarTodayOutlined";
 
 import HelpOutlineOutlinedIcon from "@mui/icons-material/HelpOutlineOutlined";
@@ -21,8 +20,6 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { tab } from "@testing-library/user-event/dist/tab";
 // import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
-
-const SESSION_URL = "/users/me";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -159,13 +156,15 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-            <Item
-              title="Calendar"
-              to="/calendar"
-              icon={<CalendarTodayOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {role !== "admin" && (
+              <Item
+                title="Calendar"
+                to="/calendar"
+                icon={<CalendarTodayOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
 
             {role === "teacher" && (
               <>
@@ -217,23 +216,16 @@ const Sidebar = () => {
                   Charts
                 </Typography>
                 <Item
-                  title="Bar Chart"
+                  title="Answers Chart"
                   to="/bar"
                   icon={<BarChartOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
                 <Item
-                  title="Pie Chart"
+                  title="Attendance Chart"
                   to="/pie"
                   icon={<PieChartOutlineOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  title="Line Chart"
-                  to="/line"
-                  icon={<TimelineOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />

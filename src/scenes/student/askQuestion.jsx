@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, useTheme, Button, Alert, AlertTitle } from "@mui/material";
 import { tokens } from "../../theme";
-import Header from "../../components/Header";
+import Header from "../../components/header";
 import axios from "../../api/axios";
-import ConfirmationDialog from "./../../components/confirmation-dialog";
-import { useSessionID } from "./../../sessionIdProvider";
+import ConfirmationDialog from "../../components/confirmationDialog";
+import { useSessionID } from "../../sessionIdProvider";
 
 const AskQuestion = () => {
   const theme = useTheme();

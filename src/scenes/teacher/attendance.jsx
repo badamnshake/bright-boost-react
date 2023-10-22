@@ -12,7 +12,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import axios from "../../api/axios";
-import Header from "../../components/Header";
+import Header from "../../components/header";
 import Toast from "../../components/toast";
 
 const ATTENDANCE_URL = "/items/SessionAttendee";

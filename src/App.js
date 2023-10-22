@@ -1,19 +1,17 @@
 import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import Topbar from "./scenes/global/Topbar";
+import Topbar from "./scenes/global/topbar";
 import AdminDashboard from "./scenes/admin/admin-dashboard";
 
-import QuestionQueue from "./scenes/teacher/question-queue";
+import QuestionQueue from "./scenes/teacher/questionQueue";
 import Attendance from "./scenes/teacher/attendance";
-import AskQuestion from "./scenes/student/ask-question";
-import Form from "./scenes/admin/form";
+import AskQuestion from "./scenes/student/askQuestion";
 import Calendar from "./scenes/student/calendar";
 import FAQ from "./scenes/student/faq";
-import BarChartPage from "./scenes/admin/BarChartPage";
-import PieChartPage from "./scenes/admin/PieChartPage";
-import LineChartPage from "./scenes/admin/LineChartPage";
-import Login from "./scenes/global/Login";
+import AnswersChartPage from "./scenes/admin/answersChartPage";
+import AttendanceChartPage from "./scenes/admin/attendanceChartPage";
+import Login from "./scenes/global/login";
 // import AuthProvider from './authProvider';
 import { useAuth } from "./authProvider";
 // import { useContext } from 'react';
@@ -55,10 +53,8 @@ function App() {
               <Route path="/team" element={<QuestionQueue />}></Route>
               <Route path="/contacts" element={<Attendance />}></Route>
               <Route path="/invoices" element={<AskQuestion />}></Route>
-              <Route path="/form" element={<Form />}></Route>
-              <Route path="/bar" element={<BarChartPage />}></Route>
-              <Route path="/pie" element={<PieChartPage />}></Route>
-              <Route path="/line" element={<LineChartPage />}></Route>
+              <Route path="/bar" element={<AnswersChartPage />}></Route>
+              <Route path="/pie" element={<AttendanceChartPage />}></Route>
               <Route path="/faq" element={<FAQ />}></Route>
               <Route path="/calendar" element={<Calendar />}></Route>
 

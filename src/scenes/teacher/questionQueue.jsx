@@ -12,7 +12,7 @@ import {
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import axios from "../../api/axios";
-import Header from "../../components/Header";
+import Header from "../../components/header";
 import Toast from "../../components/toast";
 import { useSessionID } from "../../sessionIdProvider";
 
@@ -53,15 +53,14 @@ const QuestionQueue = () => {
   };
 
   useEffect(() => {
+    if (sessionId) getQuestionsData();
+  }, [sessionId]);
 
-    getQuestionsData();
-  }, []);
-
-  if (sessionId === null) {
-    setToastMessage(
-      "Please select a session Id from calendar to see the queue"
-    );
-  }
+  // if (sessionId === null) {
+  //   setToastMessage(
+  //     "Please select a session Id from calendar to see the queue"
+  //   );
+  // }
 
   const columns = [
     {
