@@ -2,7 +2,6 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
-import Sidebar from "./scenes/global/sidebar";
 import AdminDashboard from "./scenes/admin/admin-dashboard";
 
 import QuestionQueue from "./scenes/teacher/question-queue";
@@ -18,6 +17,7 @@ import Login from "./scenes/global/Login";
 // import AuthProvider from './authProvider';
 import { useAuth } from "./authProvider";
 // import { useContext } from 'react';
+import Sidebar from './scenes/global/sidebar';
 
 function App() {
   const [theme, colorMode] = useMode();

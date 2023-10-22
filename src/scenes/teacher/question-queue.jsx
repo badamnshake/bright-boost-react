@@ -14,6 +14,7 @@ import { tokens } from "../../theme";
 import axios from "../../api/axios";
 import Header from "../../components/Header";
 import Toast from "../../components/toast";
+import { useSessionID } from "../../sessionIdProvider";
 
 const QUESTION_URL = "/items/Question";
 // const MARK_AS_ANSWERED_URL = "/items/Question?fields=*,student_id.first_name";
@@ -25,12 +26,13 @@ const QuestionQueue = () => {
 
   // State variable to control the success toast
   const [isToastOpen, setIsToastOpen] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
+  const [toastMessage, setToastMessage] = useState("");
 
   // State variables for confirmation dialog
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [sessionId, setSessionId] = useState(2);
+
+  const { sessionId } = useSessionID(); // Access the session ID from the context
 
   const getQuestionsData = async () => {
     const response = await axios.get(QUESTION_URL, {
@@ -51,8 +53,15 @@ const QuestionQueue = () => {
   };
 
   useEffect(() => {
+
     getQuestionsData();
   }, []);
+
+  if (sessionId === null) {
+    setToastMessage(
+      "Please select a session Id from calendar to see the queue"
+    );
+  }
 
   const columns = [
     {
@@ -98,12 +107,12 @@ const QuestionQueue = () => {
   const handleConfirmMarkAsAnswered = async () => {
     try {
       // Handle the action, e.g., send an API request to mark the question as answered
-      console.log("Marked as Answered: ", selectedRow);
+      // console.log("Marked as Answered: ", selectedRow);
 
       await axios.patch(QUESTION_URL + "/" + selectedRow.id, {
         answered_time: new Date(),
       });
-      console.log("updated successfully");
+      // console.log("updated successfully");
       await getQuestionsData();
 
       // Set the success toast message and open the toast

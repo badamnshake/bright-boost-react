@@ -159,6 +159,14 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
+            <Item
+              title="Calendar"
+              to="/calendar"
+              icon={<CalendarTodayOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+
             {role === "teacher" && (
               <>
                 <Item
@@ -181,14 +189,6 @@ const Sidebar = () => {
 
             {role === "student" && (
               <>
-                <Item
-                  title="Calendar"
-                  to="/calendar"
-                  icon={<CalendarTodayOutlinedIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-
                 <Item
                   title="Ask a Question"
                   to="/invoices"

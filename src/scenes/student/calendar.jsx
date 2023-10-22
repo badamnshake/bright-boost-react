@@ -25,8 +25,8 @@ const Calendar = () => {
   const colors = tokens(theme.palette.mode);
   const [currentEvents, setCurrentEvents] = useState([]);
 
-  // Access the session ID using the useSessionID hook
-  const { sessionId, setSessionId } = useSessionID();
+  // Access the session ID and other session information using the useSessionID hook
+  const { sessionId, setSessionId, setSessionName, setSessionDate } = useSessionID();
 
   // State variable for the confirmation dialog
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -65,15 +65,19 @@ const Calendar = () => {
     getSessionData();
   }, [sessionId]); // Listen for changes to the session ID
 
-  const handleEventClick = (sessionId) => {
+  const handleEventClick = (event) => {
     // Set the confirmation message
     setConfirmationMessage("Are you sure you want to select this session?");
 
     // Open the confirmation dialog
+
     setIsDialogOpen(true);
+    console.log(event);
 
     // Set the selected session ID
-    setSessionId(sessionId); // Update the session ID in the context
+    setSessionId(event.id); // Update the session ID in the context
+    setSessionName(event.title); // Update the session ID in the context
+    setSessionDate(new Date(event.start)); // Update the session ID in the context
   };
 
   const handleConfirm = () => {
@@ -88,7 +92,10 @@ const Calendar = () => {
 
   return (
     <Box m="20px">
-      <Header title="Calendar" subtitle="Please select a session from the upcoming events" />
+      <Header
+        title="Calendar"
+        subtitle="Please select a session from the upcoming events"
+      />
 
       <Box display="flex" justifyContent="space-between">
         {/* CALENDAR SIDEBAR */}
@@ -109,7 +116,7 @@ const Calendar = () => {
                   borderRadius: "2px",
                   cursor: "pointer", // Add a cursor pointer for click
                 }}
-                onClick={() => handleEventClick(event.id)}
+                onClick={() => handleEventClick(event)}
               >
                 <ListItemText
                   primary={event.title}
