@@ -2,12 +2,12 @@ import { ColorModeContext, useMode } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
-import Sidebar from "./scenes/global/Sidebar";
+import Sidebar from "./scenes/global/sidebar";
 import AdminDashboard from "./scenes/admin/admin-dashboard";
 
 import QuestionQueue from "./scenes/teacher/question-queue";
 import Attendance from "./scenes/teacher/attendance";
-import Invoices from "./scenes/admin/invoices";
+import AskQuestion from "./scenes/student/ask-question";
 import Form from "./scenes/admin/form";
 import Calendar from "./scenes/student/calendar";
 import FAQ from "./scenes/student/faq";
@@ -54,7 +54,7 @@ function App() {
 
               <Route path="/team" element={<QuestionQueue />}></Route>
               <Route path="/contacts" element={<Attendance />}></Route>
-              <Route path="/invoices" element={<Invoices />}></Route>
+              <Route path="/invoices" element={<AskQuestion />}></Route>
               <Route path="/form" element={<Form />}></Route>
               <Route path="/bar" element={<BarChartPage />}></Route>
               <Route path="/pie" element={<PieChartPage />}></Route>

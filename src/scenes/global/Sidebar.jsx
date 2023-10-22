@@ -159,24 +159,25 @@ const Sidebar = () => {
               setSelected={setSelected}
             />
 
-
             {role === "teacher" && (
-              <Item
-                title="Questions Queue"
-                to="/team"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
+              <>
+                <Item
+                  title="Questions Queue"
+                  to="/team"
+                  icon={<PeopleOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
 
-            <Item
-              title="Attendance"
-              to="/contacts"
-              icon={<ContactsOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+                <Item
+                  title="Attendance"
+                  to="/contacts"
+                  icon={<ContactsOutlinedIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              </>
+            )}
 
             {role === "student" && (
               <>
@@ -189,17 +190,17 @@ const Sidebar = () => {
                 />
 
                 <Item
-                  title="FAQ Page"
-                  to="/faq"
-                  icon={<HelpOutlineOutlinedIcon />}
+                  title="Ask a Question"
+                  to="/invoices"
+                  icon={<ReceiptOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
 
                 <Item
-                  title="Invoices Balances"
-                  to="/invoices"
-                  icon={<ReceiptOutlinedIcon />}
+                  title="FAQ Page"
+                  to="/faq"
+                  icon={<HelpOutlineOutlinedIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
